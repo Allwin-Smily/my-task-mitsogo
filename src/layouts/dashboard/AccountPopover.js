@@ -2,10 +2,10 @@ import { useRef, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { MenuItem, Avatar, IconButton, Typography } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { MenuItem, Avatar, IconButton, Typography, Hidden } from '@mui/material';
 // components
 import MenuPopover from '../../components/MenuPopover';
+import { IconUpArrow, IconUser, IconBilling, IconLogout } from '../../components/Icons'
 //
 import account from '../../_mocks_/account';
 
@@ -13,17 +13,17 @@ const MENU_OPTIONS = [
   {
     label: 'My Profile',
     linkTo: '/',
-    icon: 'eva:home-fill',
+    icon: <IconUser />,
   },
   {
     label: 'Billing',
     linkTo: '#',
-    icon: 'eva:home-fill',
+    icon: <IconBilling />,
   },
   {
     label: 'Logout',
     linkTo: '#',
-    icon: 'eva:home-fill',
+    icon: <IconLogout />,
   }
 ];
 
@@ -52,16 +52,18 @@ export default function AccountPopover() {
   return (
     <>
       <div ref={anchorRef} onClick={handleOpen}>
-      <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-        John Doe
-      </Typography>
-      <ExpandMore
-        expand={open}
-        aria-expanded={open}
-        aria-label="show more"
-      >
-        <ExpandMoreIcon />
-      </ExpandMore>
+      <Hidden mdDown>
+        <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
+          {account.displayName}
+        </Typography>
+        <ExpandMore
+          expand={open}
+          aria-expanded={open}
+          aria-label="show more"
+        >
+          <IconUpArrow />
+        </ExpandMore>
+      </Hidden>
       <IconButton
         sx={{
           padding: 0,
@@ -97,7 +99,7 @@ export default function AccountPopover() {
             onClick={handleClose}
             sx={{ typography: 'body2', py: 1, px: 2.5 }}
           >
-            <Avatar src={account.photoURL} alt="photoURL" />
+            {option.icon}
             {option.label}
           </MenuItem>
         ))}

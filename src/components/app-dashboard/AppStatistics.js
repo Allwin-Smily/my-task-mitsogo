@@ -1,33 +1,21 @@
-import { merge } from 'lodash';
 import ReactApexChart from 'react-apexcharts';
 // material
 import { Card, CardHeader, Box } from '@mui/material';
-// utils
-import { BaseOptionChart } from '../charts';
 
 const CHART_DATA = [
   {
-    name: 'Team A',
-    type: 'column',
+    name: 'Product Sold',
     data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
-  },
-  {
-    name: 'Team B',
-    type: 'area',
+  }, {
+    name: 'Total Views',
     data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-  },
-  {
-    name: 'Team C',
-    type: 'line',
-    data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
   }
 ];
 
 export default function AppStatistics() {
-  const chartOptions = merge(BaseOptionChart(), {
-    stroke: { width: [0, 2, 3] },
-    plotOptions: { bar: { columnWidth: '11%', borderRadius: 4 } },
-    fill: { type: ['solid', 'gradient', 'solid'] },
+  const chartOptions = {
+    chart: { height: 350, type: 'area' },
+    stroke: { curve: 'smooth' },
     labels: [
       '01/01/2003',
       '02/01/2003',
@@ -41,20 +29,23 @@ export default function AppStatistics() {
       '10/01/2003',
       '11/01/2003'
     ],
-    xaxis: { type: 'datetime' },
+    xaxis: {
+      type: 'datetime',
+      categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+    },
     tooltip: {
       shared: true,
       intersect: false,
       y: {
         formatter: (y) => {
           if (typeof y !== 'undefined') {
-            return `${y.toFixed(0)} visits`;
+            return `${y.toFixed(0)}`;
           }
           return y;
         }
       }
     }
-  });
+  };
 
   return (
     <Card>

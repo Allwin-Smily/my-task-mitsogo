@@ -17,7 +17,7 @@ import {
 import { mockImgAvatar } from '../../utils/mockImages';
 // components
 import MenuPopover from '../../components/MenuPopover';
-import Iconify from '../../components/Iconify';
+import { IconBell } from '../../components/Icons';
 
 const NOTIFICATIONS = [
   {
@@ -121,7 +121,7 @@ export default function NotificationsPopover() {
         onClick={handleOpen}
         >
         <Badge badgeContent={totalUnRead} color="success">
-          <Iconify icon="eva:bell-fill" width={20} height={20} />
+          <IconBell />
         </Badge>
       </IconButton>
       <MenuPopover

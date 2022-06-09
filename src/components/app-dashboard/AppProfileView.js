@@ -1,7 +1,5 @@
 import * as React from 'react';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { mockImgAvatar } from '../../utils/mockImages';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import { 
   List,
   ListItem,
@@ -14,6 +12,7 @@ import {
   CardContent,
   IconButton
 } from '@mui/material';
+import { IconMore, IconTwitter, IconFaceBook, IconLinkedin, IconWhatsapp } from '../Icons';
 
 const NOTIFICATIONS = [
   {
@@ -41,29 +40,37 @@ const NOTIFICATIONS = [
 
 export default function AppProfileView() {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: '100%' }}>
       <CardContent sx={{ textAlign: 'center' }}>
         <Avatar sx={{ bgcolor: 'background.neutral', width: '60px', height: '60px', marginLeft: '41%' }}><img alt="profile" src={mockImgAvatar(1)} /></Avatar>
         <Typography variant="subtitle2">Nick Herasimenka</Typography>
         <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>United States</Typography>
-        <div>
-          <InboxIcon sx={{ color: 'text.secondary' }} />
-          <InboxIcon sx={{ color: 'text.secondary' }} />
-          <InboxIcon sx={{ color: 'text.secondary' }} />
-          <InboxIcon sx={{ color: 'text.secondary' }} />
+        <div style={{ display: 'flex', marginLeft: '70px' }}>
+          <IconButton>
+            <IconTwitter />
+          </IconButton>
+          <IconButton>
+            <IconFaceBook />
+          </IconButton>
+          <IconButton>
+            <IconLinkedin />
+          </IconButton>
+          <IconButton>
+            <IconWhatsapp />
+          </IconButton>
         </div>
       </CardContent>
       <CardHeader
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <IconMore />
           </IconButton>
         }
         title="Our Users"
       />
       <List disablePadding>
-        {NOTIFICATIONS.map((notification) => (
-          <ListItem>
+        {NOTIFICATIONS.map((notification, index) => (
+          <ListItem key={index}>
             <ListItemAvatar>
               <Avatar sx={{ bgcolor: 'background.neutral' }}><img alt={notification.title} src={notification.avatar} /></Avatar>
             </ListItemAvatar>
@@ -80,16 +87,16 @@ export default function AppProfileView() {
               }
             />
             <Typography
-                  variant="caption"
-                  sx={{
-                    mt: '25px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    color: 'text.disabled',
-                  }}
-                >
-                  Mobile: {notification.phone}
-                </Typography>
+              variant="caption"
+              sx={{
+                mt: '25px',
+                display: 'flex',
+                alignItems: 'center',
+                color: 'text.disabled',
+              }}
+            >
+              Mobile: {notification.phone}
+            </Typography>
           </ListItem>
         ))}
       </List>

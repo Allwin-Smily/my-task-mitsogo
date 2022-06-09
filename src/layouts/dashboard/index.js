@@ -1,26 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 // material
-import { Box, Stack, IconButton, Toolbar } from '@mui/material';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
+import {
+  Box,
+  Stack,
+  IconButton,
+  Toolbar,
+  Hidden,
+  Drawer,
+  CssBaseline,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Divider,
+  Typography,
+  useMediaQuery
+} from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import MenuIcon from '@mui/icons-material/Menu';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
-import { styled } from '@mui/material/styles';
-import Typography from '@mui/material/Typography';
+import { styled, useTheme } from '@mui/material/styles';
 //layouts
 import Searchbar from './Searchbar';
 import AccountPopover from './AccountPopover';
 import NotificationsPopover from './NotificationsPopover';
 import DashboardApp from '../../pages/DashboardApp';
+import { IconMenuBar, IconHome, IconDashboard, IconDashboardActive, IconMail, IconProduct, IconSetting } from '../../components/Icons'
 
 const RootStyle = styled('div')({
   display: 'flex',
@@ -43,13 +48,12 @@ const MainStyle = styled('div')(({ theme }) => ({
 
 const drawerWidth = 240;
 
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
-})(({ theme, open }) => ({
+const AppBar = styled(MuiAppBar)(({ theme, open }) => ({
   transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
+  backgroundColor: '#fff',
   ...(open && {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: `${drawerWidth}px`,
@@ -57,6 +61,7 @@ const AppBar = styled(MuiAppBar, {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
+    backgroundColor: '#43425D',
   }),
 }));
 
@@ -66,11 +71,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: 'flex-end',
+  justifyContent: 'start',
 }));
 
-const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
+const Main = styled('main')(({ theme, open }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
@@ -89,40 +93,119 @@ const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
 );
 
 const ToolbarStyle = styled(Toolbar)(({ theme, open }) => ({
+  ...(open && {
+    borderTopLeftRadius: 20,
+  }),
   backgroundColor: '#fff',
   minHeight: 64,
   [theme.breakpoints.up('lg')]: {
     minHeight: 70,
     padding: theme.spacing(0, 5),
-    borderTopLeftRadius: 20,
   }
 }));
 
+const MENU_NAV_BAR = [
+  {
+    id: 1,
+    label: 'Home',
+    status: 'noactive',
+    icon: <IconHome />,
+    iconActive: <IconHome />,
+  },
+  {
+    id: 2,
+    label: 'Dashboard',
+    status: 'active',
+    icon: <IconDashboard />,
+    iconActive: <IconDashboardActive />,
+  },
+  {
+    id: 3,
+    label: 'Inbox',
+    status: 'noactive',
+    icon: <IconMail />,
+    iconActive: <IconHome />,
+  },
+  {
+    id: 4,
+    label: 'Products',
+    status: 'noactive',
+    icon: <IconProduct />,
+    iconActive: <IconHome />,
+  },
+  {
+    id: 5,
+    label: 'Admin',
+    status: 'noactive',
+    icon: <IconSetting />,
+    iconActive: <IconHome />,
+  },
+]
 
 export default function DashboardLayout() {
-  const [open, setOpen] = useState(true);
+
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     (!open)? setOpen(true) : setOpen(false)
   }
 
+  useEffect(() => {
+    (!isDesktop)? setOpen(false): setOpen(true)
+  },[isDesktop]);
+
+  const renderAppBar = (
+    <>
+      <IconButton edge="start" color="inherit" onClick={handleDrawerOpen} aria-label="menu">
+        <IconMenuBar />
+      </IconButton>
+      <Hidden mdDown>
+        <Searchbar />
+      </Hidden>
+      <Box sx={{ flexGrow: 1 }} />
+      <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
+      <Hidden mdUp>
+        <Searchbar />
+      </Hidden>
+        <NotificationsPopover />
+        <AccountPopover />
+      </Stack>
+    </>
+  );
+
+  const renderDrawerContent = (
+    <>
+      <DrawerHeader sx={{ backgroundColor: '#3C3B54' }}>
+        <Typography variant='h6' sx={{ color: '#fff', textAlign: 'center' }} >
+          A&nbsp;C&nbsp;M&nbsp;E
+        </Typography>
+      </DrawerHeader>
+      <Divider />
+      <List className='Menu-bar'>
+        {MENU_NAV_BAR.map((menu, index) => (
+          <ListItem className={menu.status === "active" ? ( 'side-menu active' ) : ( 'side-menu' )} key={index} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+              {menu.status === "active" ? ( menu.iconActive ) : ( menu.icon )}
+              </ListItemIcon>
+              <ListItemText primary={menu.label} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </>
+  );
+
   return (
     <RootStyle>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar position="fixed" sx={{ backgroundColor: '#43425D' }} open={open}>
+        <AppBar position="fixed" open={open}>
           <ToolbarStyle open={open}>
-            <IconButton edge="start" color="inherit" onClick={handleDrawerOpen} aria-label="menu" sx={{ mr: 2 }}>
-              <MenuIcon sx={{color: 'black' }} />
-            </IconButton>
-            <Searchbar />
-            <Box sx={{ flexGrow: 1 }} />
-            <Stack direction="row" alignItems="center" spacing={{ xs: 0.5, sm: 1.5 }}>
-              <NotificationsPopover />
-              <AccountPopover />
-            </Stack>
+            {renderAppBar}
           </ToolbarStyle>
-          {/* <DashboardNavbar handleDrawerOpen={() => (!open)? setOpen(true) : setOpen(false)} /> */}
         </AppBar>
         <Drawer
           sx={{
@@ -139,27 +222,9 @@ export default function DashboardLayout() {
           anchor="left"
           open={open}
         >
-          <DrawerHeader sx={{justifyContent: 'start'}}>
-            <Typography variant='h6' sx={{ color: '#fff', textAlign: 'center' }} >
-              A&nbsp;C&nbsp;M&nbsp;E
-            </Typography>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            {['Home', 'Dashboard', 'Inbox', 'Products', 'Admin'].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
+          {renderDrawerContent}
         </Drawer>
         <Main open={open} sx={{ backgroundColor: '#F5F7FB' }}>
-          <DrawerHeader />
           <DashboardApp />
         </Main>
       </Box>

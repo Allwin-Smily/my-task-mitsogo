@@ -28,6 +28,11 @@
   color: #61dafb;
 }
 
+.Menu-bar .side-menu.active {
+  border-left: 3px solid #A3A0FB;
+  background-color: #3C3B54;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -1,17 +1,19 @@
 // material
-import { IconButton, Typography } from '@mui/material';
+import { IconButton, Typography, Hidden } from '@mui/material';
 // component
-import Iconify from '../../components/Iconify';
+import { IconSearch } from '../../components/Icons'
 
 export default function Searchbar() {
   return (
       <div>
           <IconButton>
-            <Iconify icon="eva:search-fill" width={20} height={20} />
+            <IconSearch />
           </IconButton>
-          <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
-            Search transactions, invoices or help
-          </Typography>
+          <Hidden mdDown>
+            <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>
+              Search transactions, invoices or help
+            </Typography>
+          </Hidden>
       </div>
   );
 }

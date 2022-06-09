@@ -28,11 +28,7 @@ const StyledTableRow = styled(TableRow)(() => ({
   '&:nth-of-type()': {
     backgroundColor: '#FFFFFF',
     color: '#4D4F5C'
-  },
-  // hide last border
-  // '&:last-child td, &:last-child th': {
-  //   border: 0,
-  // },
+  }
 }));
 
 function createData(location, views, sales, conversion, total) {
@@ -49,14 +45,20 @@ const rows = [
 ];
 
 export default function AppReferreTableList() {
+
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card>
       <CardContent>
         <Typography variant='h6' color="text.secondary" gutterBottom>
           Referrer
         </Typography>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableContainer component={Paper} sx={{
+          width: '100%',
+          '@media (max-width: 470px)': {
+            width: 305,
+          },
+         }}>
+          <Table aria-label="customized table">
             <TableHead>
               <TableRow>
                 <StyledTableCell>Location</StyledTableCell>
@@ -80,11 +82,9 @@ export default function AppReferreTableList() {
               ))}
             </TableBody>
             <TableFooter>
-              <TableRow>
               <Typography variant='body2' color="#3B86FF" sx={{ mx: '15px', my: '10px' }}>
                 Show More
               </Typography>
-              </TableRow>
             </TableFooter>
           </Table>
         </TableContainer>

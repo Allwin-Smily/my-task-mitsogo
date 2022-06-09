@@ -2,31 +2,56 @@ import * as React from 'react';
 import {
   Card,
   CardHeader,
-  CardMedia,
   CardContent,
-  IconButton
+  IconButton,
+  Hidden
 } from '@mui/material';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { mockImgProduct } from '../../utils/mockImages';
+import { IconMore } from '../Icons';
 
 export default function AppProductVideo() {
+  const DesktopiFrame = (
+    <iframe
+      id="Desktopvideo"
+      width="310"
+      height="185"
+      title="Desktopvideo"
+      src={"https://www.youtube.com/embed/Oy6hk6Y7VHQ"}
+      frameBorder="0"
+      allow="picture-in-picture"
+      allowFullScreen
+    />
+  );
+
+  const MobileiFrame = (
+    <iframe
+      id="Mobilevideo"
+      width="280"
+      height="190"
+      title="Mobilevideo"
+      src={"https://www.youtube.com/embed/Oy6hk6Y7VHQ"}
+      frameBorder="0"
+      allow="picture-in-picture"
+      allowFullScreen
+    />
+  );
+
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card sx={{ width: '100%' }}>
       <CardHeader
         action={
           <IconButton aria-label="settings">
-            <MoreVertIcon />
+            <IconMore />
           </IconButton>
         }
         title="Product Video"
       />
       <CardContent>
-        <CardMedia
-          component="img"
-          height="194"
-          image={mockImgProduct(1)}
-          alt="Product 1"
-        />
+        <Hidden mdDown>
+          {DesktopiFrame}
+        </Hidden>
+        <Hidden mdUp>
+          {MobileiFrame}
+        </Hidden>
       </CardContent>
     </Card>
   );

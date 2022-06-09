@@ -2,8 +2,6 @@
 import { Popover } from '@mui/material';
 import { alpha, styled } from '@mui/material/styles';
 
-// ----------------------------------------------------------------------
-
 const ArrowStyle = styled('span')(({ theme }) => ({
   [theme.breakpoints.up('sm')]: {
     top: -7,
