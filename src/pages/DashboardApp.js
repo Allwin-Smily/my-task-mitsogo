@@ -1,11 +1,13 @@
+import React, { Suspense } from 'react';
 // material
 import { Grid, Stack, Button, Container, Hidden, Typography } from '@mui/material';
 import AppReferreTableList from '../components/app-dashboard/AppReferreTableList';
-import AppStatistics from '../components/app-dashboard/AppStatistics';
-import AppSalesGraph from '../components/app-dashboard/AppSalesGraph';
 import AppProfileView from '../components/app-dashboard/AppProfileView';
 import AppProductVideo from '../components/app-dashboard/AppProductVideo';
 import AddIcon from '@mui/icons-material/Add';
+
+const AppStatistics = React.lazy(() => import('../components/app-dashboard/AppStatistics'));
+const AppSalesGraph = React.lazy(() => import('../components/app-dashboard/AppSalesGraph'));
 
 export default function DashboardApp() {
 
@@ -14,10 +16,14 @@ export default function DashboardApp() {
       <Grid item xs={12} lg={8}>
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
+          <Suspense fallback={<div>Loading ... </div>}>
             <AppStatistics />
+          </Suspense>
           </Grid>
           <Grid item xs={12} md={6}>
-            <AppSalesGraph />
+            <Suspense fallback={<div>Loading ... </div>}>
+              <AppSalesGraph />
+            </Suspense>
           </Grid>
           <Grid item xs={12}>
             <AppReferreTableList />
@@ -43,10 +49,14 @@ export default function DashboardApp() {
         <AppProfileView />
       </Grid>
       <Grid item xs={12}>
-        <AppStatistics />
+        <Suspense fallback={<div>Loading ... </div>}>
+          <AppStatistics />
+        </Suspense>
       </Grid>
       <Grid item xs={12}>
-        <AppSalesGraph />
+        <Suspense fallback={<div>Loading ... </div>}>
+          <AppSalesGraph />
+        </Suspense>
       </Grid>
       <Grid item xs={12}>
         <AppReferreTableList />

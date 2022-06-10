@@ -51,7 +51,7 @@ export default function AppStatistics() {
     <Card>
       <CardHeader title="Statistics" subheader="Last 6 Months" />
       <Box sx={{ p: 3, pb: 1 }} dir="ltr">
-        <ReactApexChart type="line" series={CHART_DATA} options={chartOptions} height={270} />
+        <ReactApexChart type="line" series={CHART_DATA} options={chartOptions} width="100%" height={270} />
       </Box>
     </Card>
   );

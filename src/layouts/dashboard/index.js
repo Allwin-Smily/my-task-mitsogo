@@ -62,6 +62,7 @@ const AppBar = styled(MuiAppBar)(({ theme, open }) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
     backgroundColor: '#43425D',
+    paddingRight: '0px !important',
   }),
 }));
 

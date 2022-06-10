@@ -61,7 +61,7 @@ export default function AppSalesGraph() {
     <Card>
       <CardHeader title="Sales Distribution" />
       <ChartWrapperStyle dir="ltr">
-        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} height={230} />
+        <ReactApexChart type="pie" series={CHART_DATA} options={chartOptions} width="100%" height={230} />
       </ChartWrapperStyle>
     </Card>
   );
