@@ -10,7 +10,8 @@ import {
   Card,
   CardHeader,
   CardContent,
-  IconButton
+  IconButton,
+  Badge
 } from '@mui/material';
 import { IconMore, IconTwitter, IconFaceBook, IconLinkedin, IconWhatsapp } from '../Icons';
 
@@ -42,7 +43,12 @@ export default function AppProfileView() {
   return (
     <Card sx={{ width: '100%' }}>
       <CardContent sx={{ textAlign: 'center' }}>
-        <Avatar sx={{ bgcolor: 'background.neutral', width: '60px', height: '60px', marginLeft: '41%' }}><img alt="profile" src={mockImgAvatar(1)} /></Avatar>
+        <Badge
+          overlap="circular"
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        >
+          <Avatar sx={{ bgcolor: 'background.neutral', width: '60px', height: '60px' }}><img alt="profile" src={mockImgAvatar(1)} /></Avatar>
+        </Badge>
         <Typography variant="subtitle2">Nick Herasimenka</Typography>
         <Typography component="span" variant="body2" sx={{ color: 'text.secondary' }}>United States</Typography>
         <div style={{ display: 'flex', marginLeft: '70px' }}>

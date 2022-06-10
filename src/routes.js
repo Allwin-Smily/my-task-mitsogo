@@ -4,6 +4,7 @@ import DashboardLayout from './layouts/dashboard';
 
 export default function Router() {
   return useRoutes([
+    { path: '/', element: <DashboardLayout /> },
     { path: '/dashboard', element: <DashboardLayout /> },
     { path: '/home', element: <DashboardLayout /> },
     { path: '/inbox', element: <DashboardLayout /> },

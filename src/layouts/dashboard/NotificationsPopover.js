@@ -139,7 +139,7 @@ export default function NotificationsPopover() {
         <Divider />
 
         <Box sx={{ p: 1 }}>
-          <Button fullWidth> Show More </Button>
+          <Button fullWidth sx={{ color: '#3B86FF' }}> Show More </Button>
         </Box>
       </MenuPopover>
     </>
